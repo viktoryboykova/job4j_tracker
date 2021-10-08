@@ -13,12 +13,13 @@ public class StartUITest {
         Input in = new StubInput(
                 new String[] {"0", "Item name", "1"}
         );
+        Output output = new StubOutput();
         Tracker tracker = new Tracker();
         UserAction[] actions = {
-                new CreateAction(),
-                new ExitAction()
+                new CreateAction(output),
+                new ExitAction(output)
         };
-        new StartUI().init(in, tracker, actions);
+        new StartUI(output).init(in, tracker, actions);
         assertThat(tracker.findAll()[0].getName(), is("Item name"));
     }
 
@@ -30,11 +31,12 @@ public class StartUITest {
         Input in = new StubInput(
                 new String[] {"0", "1", replacedName, "1"}
         );
+        Output output = new StubOutput();
         UserAction[] actions = {
-                new ReplaceAction(),
-                new ExitAction()
+                new ReplaceAction(output),
+                new ExitAction(output)
         };
-        new StartUI().init(in, tracker, actions);
+        new StartUI(output).init(in, tracker, actions);
         assertThat(tracker.findById(item.getId()).getName(), is(replacedName));
     }
 
@@ -45,11 +47,29 @@ public class StartUITest {
         Input in = new StubInput(
                 new String[] {"0", "1", "1"}
         );
+        Output output = new StubOutput();
         UserAction[] actions = {
-                new DeleteAction(),
-                new ExitAction()
+                new DeleteAction(output),
+                new ExitAction(output)
         };
-        new StartUI().init(in, tracker, actions);
+        new StartUI(output).init(in, tracker, actions);
         assertThat(tracker.findById(item.getId()), is(nullValue()));
+    }
+
+    @Test
+    public void whenExit() {
+        Output out = new StubOutput();
+        Input in = new StubInput(
+                new String[] {"0"}
+        );
+        Tracker tracker = new Tracker();
+        UserAction[] actions = {
+                new ExitAction(out)
+        };
+        new StartUI(out).init(in, tracker, actions);
+        assertThat(out.toString(), is(
+                "Menu." + System.lineSeparator() +
+                        "0. Exit" + System.lineSeparator()
+        ));
     }
 }
