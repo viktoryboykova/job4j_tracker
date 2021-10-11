@@ -21,7 +21,7 @@ public class ValidateInput implements Input {
         do {
             String rsl = in.askStr(question);
             if (!isNumber(rsl)) {
-                System.out.println("Please enter validate data again.");
+                out.println("Please enter validate data again.");
                 continue;
             }
             value = Integer.parseInt(rsl);
