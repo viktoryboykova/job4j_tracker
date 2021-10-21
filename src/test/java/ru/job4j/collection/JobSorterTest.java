@@ -64,8 +64,8 @@ public class JobSorterTest {
     public void whenCompatorByNameAndProrityAsc() {
         Comparator<Job> cmpNamePriority = new JobAscByName().thenComparing(new JobAscByPriority());
         int rsl = cmpNamePriority.compare(
-                new Job("Вика", 0),
-                new Job("Егор", 1)
+                new Job("В", 0),
+                new Job("В", 1)
         );
         assertThat(rsl, lessThan(0));
     }
