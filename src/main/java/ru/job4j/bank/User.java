@@ -2,10 +2,19 @@ package ru.job4j.bank;
 
 import java.util.Objects;
 
+/**
+ * Класс описывает параметры пользователей банка и присваивает им значения через контруктор
+ * @author VIKTORIA BOYKOVA
+ * @version 1.0
+ */
 public class User {
     private String passport;
     private String username;
 
+    /**
+     * @param passport - паспорт пользователя банка
+     * @param username - имя пользователя банка
+     */
     public User(String passport, String username) {
         this.passport = passport;
         this.username = username;
