@@ -10,6 +10,13 @@ public class SqlTracker implements Store {
 
     private Connection cn;
 
+    public SqlTracker(Connection connection) {
+        this.cn = connection;
+    }
+
+    public SqlTracker() {
+    }
+
     public void init() {
         try (InputStream in = SqlTracker.class.getClassLoader().getResourceAsStream("app.properties")) {
             Properties config = new Properties();
@@ -58,7 +65,6 @@ public class SqlTracker implements Store {
             statement.setString(1, item.getName());
             statement.setTimestamp(2, Timestamp.valueOf(item.getCreated()));
             statement.setInt(3, id);
-            statement.execute();
             result = statement.executeUpdate() > 0;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -72,7 +78,6 @@ public class SqlTracker implements Store {
         try (PreparedStatement statement =
                      cn.prepareStatement("delete from items where id = ?")) {
             statement.setInt(1, id);
-            statement.execute();
             result = statement.executeUpdate() > 0;
         } catch (Exception e) {
             throw new RuntimeException(e);
