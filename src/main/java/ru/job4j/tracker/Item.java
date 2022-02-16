@@ -16,9 +16,15 @@ public class Item implements Comparable<Item> {
             DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     private String name;
     private LocalDateTime created = LocalDateTime.now();
+    private String description;
 
     public Item() {
 
+    }
+
+    public Item(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
     public Item(String name) {
