@@ -12,7 +12,6 @@ public class MemTracker implements Store {
     private int ids = 1;
     private Connection cn;
 
-    @Override
     public void init() {
         try (InputStream in = SqlTracker.class.getClassLoader().getResourceAsStream("app.properties")) {
             Properties config = new Properties();

@@ -8,14 +8,17 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class HbmTracker implements Store, AutoCloseable {
     private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
             .configure().build();
     private final SessionFactory sf = new MetadataSources(registry)
             .buildMetadata().buildSessionFactory();
+
+    @Override
+    public void init() {
+
+    }
 
     @Override
     public Item add(Item item) {
