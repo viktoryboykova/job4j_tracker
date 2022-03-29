@@ -5,8 +5,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.function.Consumer;
 
-public class SqlTracker implements Store {
+public class SqlTracker implements Store, StoreReact {
 
     private Connection cn;
 
@@ -148,4 +149,19 @@ public class SqlTracker implements Store {
         Item item = sqlTracker.findById(3);
         System.out.println(item);
         }
+
+    public void findAll(Consumer<Item> observer) {
+        try (PreparedStatement statement = cn.prepareStatement("select * from items")) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Item item = new Item(resultSet.getInt("id"),
+                            resultSet.getString("name"));
+                    item.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
+                    observer.accept(item);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
